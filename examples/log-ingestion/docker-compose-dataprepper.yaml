@@ -1,13 +1,21 @@
 version: '3.7'
 services:
   data-prepper:
-    image: opensearchproject/data-prepper:2
+    image: opensearch-data-prepper:2.14.0-SNAPSHOT
+    #image: opensearchproject/data-prepper:latest
     container_name: data-prepper
     volumes:
       - ./log_pipeline.yaml:/usr/share/data-prepper/pipelines/log_pipeline.yaml
       - ./data-prepper-config.yaml:/usr/share/data-prepper/config/data-prepper-config.yaml
+      - ./config:/usr/share/data-prepper/config/config
+      - ./credentials:/usr/share/data-prepper/config/credentials
+      - ./cacerts:/usr/share/data-prepper/cert/cacerts
     ports:
       - 2021:2021
+    environment:
+      AWS_CONFIG_FILE : /usr/share/data-prepper/config/config
+      AWS_SHARED_CREDENTIALS_FILE : /usr/share/data-prepper/config/credentials
+      JAVA_OPTS: -Djavax.net.ssl.trustStore=/usr/share/data-prepper/cert/cacerts -Djavax.net.ssl.trustStorePassword=changeit
     networks:
     - opensearch-net
 

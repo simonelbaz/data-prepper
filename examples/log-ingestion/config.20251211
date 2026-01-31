@@ -1,0 +1,5 @@
+[default]
+endpoint_url=http://172.24.64.204:9000
+region = us-east-1
+s3 =
+    signature_version = s3v4 

@@ -1,0 +1,6 @@
+[default]
+endpoint_url = https://minio.example.mi
+ca_bundle = /usr/share/data-prepper/cert/mi.pem
+region = us-east-1
+s3 =
+    signature_version = s3v4 

@@ -12,4 +12,10 @@ log-pipeline:
         insecure: true
         username: admin
         password: Developer@123
+        dlq:
+          s3:
+            bucket: "smartsla-bucket"
+            key_path_prefix: "rarrow/"
+            region: "us-east-1"
+            force_path_style: true
         index: apache_logs

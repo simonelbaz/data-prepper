@@ -5,6 +5,7 @@ services:
     image: docker.io/fluent/fluent-bit
     volumes:
       - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./parsers.conf:/fluent-bit/etc/parsers.conf
       - ./test.log:/var/log/test.log
     networks:
       - opensearch-net

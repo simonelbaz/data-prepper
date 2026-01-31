@@ -19,3 +19,14 @@ data-prepper-main/src/test/resources/logstash-conf/logstash-filter.yaml
 *.iml
 .kiro
 .vscode
+
+##
+release/
+data-prepper-test/
+performance-test/
+e2e-test/
+bin/
+.classpath
+.project
+.settings
+.factorypath
