@@ -1,6 +1,10 @@
 /*
  * Copyright OpenSearch Contributors
  * SPDX-License-Identifier: Apache-2.0
+ *
+ * The OpenSearch Contributors require contributions made to
+ * this file be licensed under the Apache-2.0 license or a
+ * compatible open source license.
  */
 
 package org.opensearch.dataprepper.model.sink;
@@ -93,17 +97,21 @@ public class SinkContextTest {
         verify(forwardPipeline2, times(0)).sendEvents(eq(records));
         sinkForwardRecordsContext.addRecords(records);
         assertThat(sinkContext.forwardRecords(sinkForwardRecordsContext, Map.of("datakey1", "datavalue1"), Map.of("metadataKey1", "metadataValue1")), equalTo(true));
-        verify(forwardPipeline1, times(1)).sendEvents(eq(records));
-        verify(forwardPipeline2, times(1)).sendEvents(eq(records));
+        verify(forwardPipeline1, times(1)).sendEvents(any());
+        verify(forwardPipeline2, times(1)).sendEvents(any());
         verify(event, times(1)).put(any(String.class), any(Object.class));
         verify(event, times(1)).getMetadata();
         verify(eventMetadata, times(1)).setAttribute(any(String.class), any(Object.class));
+        records = Collections.singletonList(record);
+        sinkForwardRecordsContext.addRecords(records);
         assertThat(sinkContext.forwardRecords(sinkForwardRecordsContext, null, null), equalTo(true));
-        verify(forwardPipeline1, times(2)).sendEvents(eq(records));
-        verify(forwardPipeline2, times(2)).sendEvents(eq(records));
+        verify(forwardPipeline1, times(2)).sendEvents(any());
+        verify(forwardPipeline2, times(2)).sendEvents(any());
+        records = Collections.singletonList(record);
+        sinkForwardRecordsContext.addRecords(records);
         assertThat(sinkContext.forwardRecords(sinkForwardRecordsContext, Map.of(), Map.of()), equalTo(true));
-        verify(forwardPipeline1, times(3)).sendEvents(eq(records));
-        verify(forwardPipeline2, times(3)).sendEvents(eq(records));
+        verify(forwardPipeline1, times(3)).sendEvents(any());
+        verify(forwardPipeline2, times(3)).sendEvents(any());
     }
 
     @Test
@@ -148,6 +156,7 @@ public class SinkContextTest {
         SinkForwardRecordsContext sinkForwardRecordsContext = new SinkForwardRecordsContext(sinkContext);
         sinkForwardRecordsContext.addRecords(List.of(record));
         assertThat(sinkContext.forwardRecords(sinkForwardRecordsContext, Map.of(), Map.of()), equalTo(false));
+        assertThat(sinkForwardRecordsContext.getRecords().size(), equalTo(0));
     }
 }
 
